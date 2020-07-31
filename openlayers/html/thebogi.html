@@ -1,0 +1,97 @@
+<html> 
+<head> 
+  <meta charset="UTF-8">
+  <style>
+    *{
+	margin:0;
+	padding:0;
+    }
+    body{
+	font:17px,sans-serif;
+    }
+    a{
+	text-decoration:none;
+	color:404040;
+    }
+    li{
+	list-style:none;
+    }
+    
+    #menu1{
+	background: #98E0AD;
+	height:50px;
+    }
+    #menu1 ul{
+	width:500px;
+	margin:0 auto;
+    }
+    #menu1 .main>li{
+	float:left;
+	width:25%;
+	height:50px;
+	line-height:50px;
+	text-align:center;
+	background:#98E0AD;	
+	position:relative;
+    }
+    #menu1 .main>li:hover .sub{
+	display:block;
+    }    
+    #menu1 .main>li a{
+	display:block;
+    } 
+    #menu1 .main>li a:hover{
+	background:#138535;
+	color:#fff;
+    } 
+    #menu1 .main .sub{
+	position:absolute;
+	top:50px;
+	left:0;
+	width:100%;
+	display:none; 
+    } 
+    #menu1 .main .sub li{
+	background:#DAAADB;
+    } 
+    #menu1 .main .sub li a:hover{
+	background:#7A297B;
+    } 
+  </style>
+  <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <body> 
+    <div id="menu1">
+      <ul class="main">
+	<li><a href="#">MENU01</a>
+	  <ul class="sub">
+		<li><a href="#">SUB1</a></li>
+		<li><a href="#">SUB2</a></li>
+		<li><a href="#">SUB3</a></li>
+	  </ul>
+        </li>
+	<li><a href="#">MENU02</a>
+	  <ul class="sub">
+		<li><a href="#">SUB4</a></li>
+		<li><a href="#">SUB5</a></li>
+		<li><a href="#">SUB6</a></li>
+	  </ul>
+        </li>
+	<li><a href="#">MENU03</a>
+	  <ul class="sub">
+		<li><a href="#">SUB7</a></li>
+		<li><a href="#">SUB8</a></li>
+		<li><a href="#">SUB9</a></li>
+	  </ul>
+        </li>
+	<li><a href="#">MENU04</a>
+	  <ul class="sub">
+		<li><a href="#">SUB10</a></li>
+		<li><a href="#">SUB11</a></li>
+		<li><a href="#">SUB12</a></li>
+	  </ul>
+        </li>
+      </ul>
+    </div>
+  </body> 
+</html>
+
