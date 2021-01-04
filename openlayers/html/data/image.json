@@ -1,0 +1,35 @@
+jsonFlickrFeed({
+		"title": "Recent Uploads tagged bird, with geodata",
+		"link": "http://www.flickr.com/photos/tags/bird/",
+		"description": "",
+		"modified": "2014-08-22T01:08:29Z",
+		"generator": "http://www.flickr.com/",
+		"items": [
+	   {
+			"title": "Osprey in Flight",
+			"link": "http://www.flickr.com/photos/look-what-i-took/14991623541/",
+			"media": {"m":"http://farm4.staticflickr.com/3902/14991623541_5e78403aff_m.jpg"},
+			"date_taken": "2014-05-13T13:23:21-08:00",
+			"description": " <p><a href=\"http://www.flickr.com/people/look-what-i-took/\">Angela Redmon<\/a> posted a photo:<\/p> <p><a href=\"http://www.flickr.com/photos/look-what-i-took/14991623541/\" title=\"Osprey in Flight\"><img src=\"http://farm4.staticflickr.com/3902/14991623541_5e78403aff_m.jpg\" width=\"240\" height=\"240\" alt=\"Osprey in Flight\" /><\/a><\/p> ",
+			"published": "2014-08-22T01:08:29Z",
+			"author": "nobody@flickr.com (Angela Redmon)",
+			"author_id": "93908212@N07",
+			"tags": "blue sky bird birds animal animals flying wildlife flight feathers feather osprey airborn shadeofblue",
+                        "latitude" : "45.611347",
+                	"longitude" : "-122.679535"
+	   },
+	   {
+			"title": "Mr. SON",
+			"link": "https://www.flickr.com/photos/122220142@N04/13717254825/",
+			"media": {"m":"https://live.staticflickr.com/7331/13717254825_68bcf52e2e_b.jpg"},
+			"date_taken": "2013-10-12T15:36:24-08:00",
+			"description": " <p><a href=\"http://www.flickr.com/people/jstormer/\">jaybirding<\/a> posted a photo:<\/p> <p><a href=\"http://www.flickr.com/photos/jstormer/14992665882/\" title=\"Pileated Woodpecker\"><img src=\"http://farm6.staticflickr.com/5585/14992665882_f8f9d64f37_m.jpg\" width=\"192\" height=\"240\" alt=\"Pileated Woodpecker\" /><\/a><\/p> <p>Pileated Woodpecker (Dryocopus pileatus) male, at suet feeder on Rossmore Road, Brunswick, ME.<\/p>",
+			"published": "2014-08-21T20:53:01Z",
+			"author": "nobody@flickr.com (jaybirding)",
+			"author_id": "44983479@N02",
+			"tags": "bird me us sony maine brunswick rossmore stormer sal70400g slt65v",
+                        "latitude" : "127.024612",
+                	"longitude" : "37.532600"
+	   }
+        ]
+})

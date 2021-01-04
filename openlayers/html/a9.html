@@ -1,0 +1,45 @@
+<!--항공샷 넣은버전 -->
+<!doctype html>
+<html>
+  <head>
+    <title>Simple example</title>
+    <link rel="stylesheet" href="/assets/ol3/css/ol.css" type="text/css" />
+    <link rel="stylesheet" href="/assets/css/samples.css" type="text/css" />
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script src="/assets/ol3/js/ol.js"></script>
+    <script>
+      var sourceBingMaps = new ol.source.BingMaps({
+	key: 'AlC8Chh5l-wFnm2a4TPbrhA8Ei6GPTvaAZeCCY8Y_n4kUsuREDCSwynj-8CSBoJY',
+	imagerySet: 'Road',
+      });
+
+      var bingMapsRoad = new ol.layer.Tile({
+	source: sourceBingMaps
+      });
+
+      var bingMapsAerial = new ol.layer.Tile({
+	source: new ol.source.BingMaps({
+	key: 'AlC8Chh5l-wFnm2a4TPbrhA8Ei6GPTvaAZeCCY8Y_n4kUsuREDCSwynj-8CSBoJY',
+	//imagerySet: 'Aerial',
+	imagerySet: 'AerialWithLabels',
+	})
+      });
+
+
+
+      var map = new ol.Map({
+        layers: [bingMapsRoad, bingMapsAerial],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.transform([127.38500, 36.35111], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 5
+        })
+      });
+      
+      
+    </script>
+  </body>
+</html>
+

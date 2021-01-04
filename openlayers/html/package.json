@@ -1,0 +1,13 @@
+{
+  "name": "zoomify",
+  "dependencies": {
+    "ol": "6.4.3"
+  },
+  "devDependencies": {
+    "parcel": "1.11.0"
+  },
+  "scripts": {
+    "start": "parcel a14.html",
+    "build": "parcel build --experimental-scope-hoisting --public-url . a14.html"
+  }
+}
