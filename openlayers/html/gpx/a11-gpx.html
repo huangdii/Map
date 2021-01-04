@@ -1,0 +1,296 @@
+<!--vworld 위성 지도 추가-->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>대한민국 지도</title>
+    <link rel="stylesheet" href="/assets/ol3/css/ol.css" type="text/css" />
+    <link rel="stylesheet" href="/assets/css/samples.css" type="text/css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <style>
+    *{
+	margin:0;
+	padding:0;
+    }
+
+    a{
+	text-decoration:none;
+	color:#404040;
+    }
+    li{
+	list-style:none;
+    }
+    
+    #menu1{
+	background: #98E0AD;
+	height:50px;
+    }
+    #menu1 ul{
+	width:500px;
+	margin:0 auto;
+    }
+    #menu1 .main>li{
+	float:left;
+	width:25%;
+	height:50px;
+	line-height:50px;
+	text-align:center;
+	background:#98E0AD;	
+	position:relative;
+    }
+    #menu1 .main>li:hover .sub{
+	display:block;
+    }    
+    #menu1 .main>li a{
+	display:block;
+    } 
+    #menu1 .main>li a:hover{
+	background:#138535;
+	color:#fff;
+    } 
+    #menu1 .main .sub{
+	position:relative;
+	top: calc(100% - 205px);
+	left:0;
+	width:100%;
+	display:none; 
+    } 
+    #menu1 .main .sub li{
+	background:#DAAADB;
+    } 
+    #menu1 .main .sub li a:hover{
+	background:#7A297B;
+    }
+
+    
+    .sub button{
+	border:none;
+	background:#DAAADB;
+	color:#404040;
+	width:100%;
+	height:100%;
+	padding: 15px 0px 15px 0px;
+    }      
+    .sub button:hover{
+	background:#7A297B;
+	color:#fff;
+    } 
+
+    h1{
+      	font-size:45px;
+      	text-align: center;
+      	border-bottom:5px solid gray;
+      	margin:0;
+      	padding:20px;
+    }
+
+    #map{
+	position:relative;
+	display: inline-block;	
+	border:4px solid pink;
+    }
+
+    </style>
+  </head>
+  <body>
+   <h1>KAERIRYU</h1>
+   <div id="grid">
+   <div id="menu1">
+      <ul class="main">
+	<li><a href="#">대한민국</a>
+	  <ul class="sub">
+		<li><button onclick="doPan(daejeon);">KAERI로</button></li> 
+		<li><button onclick="doPan(seoul);">서울로</button></li> 
+		<li><button onclick="doPan(jeju);">제주도로</button></li>
+	  </ul>
+        </li>
+	<li><a href="#">이웃나라</a>
+	  <ul class="sub">
+		<li><button onclick="doBounce(northkorea);">북한으로</button></li>
+		<li><button onclick="doBounce(japan);">일본으로</button></li>
+		<li><button onclick="doBounce(center);">첫화면으로...</button></li>
+	  </ul>
+        </li>
+	<li><a href="#">MENU</a>
+	  <ul class="sub">
+		<li><a href="#">SUB7</a></li>
+		<li><a href="#">SUB8</a></li>
+		<li><a href="#">SUB9</a></li>
+	  </ul>
+        </li>
+	<li><a href="#">MENU</a>
+	  <ul class="sub">
+		<li><a href="#">SUB10</a></li>
+		<li><a href="#">SUB11</a></li>
+		<li><a href="#">SUB12</a></li>
+	  </ul>
+        </li>
+      </ul>
+   </div>    
+
+
+    <div id="map" class="map"></div>
+    <div id="overlay" style="background-color: white; border-radius: 10px; border: 1px solid black; padding: 5px 10px;"></div>
+    <input type="checkbox" id="visible" checked> VWORLD 위성 지도 숨기기<br />
+    <!--지도 누르면 위도 경도 팝업으로 뜨게 하기-->
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="/assets/ol3/js/ol.js"></script>
+    <script src="/assets/ol3/js/ol-debug.js"></script>
+    <script>
+
+
+	// create a layer with the OSM source
+        var layer = new ol.layer.Tile({
+          source: new ol.source.OSM(),
+	  //opacity: 0.6,
+          //brightness: 0.2
+        });
+
+
+	//VWORD's satellite LAYER
+	var satellite = new ol.layer.Tile({
+	  title : 'VWorld Gray Map',
+	  visible : true,
+	  type : 'base',
+	  source : new ol.source.XYZ({
+	    url : 'http://xdworld.vworld.kr:8080/2d/Satellite/201612/{z}/{x}/{y}.jpeg'
+	   })
+	});
+
+	// center on SouthKorea, transforming to map projection
+        var center = ol.proj.transform([127.024612, 37.532600], 'EPSG:4326', 'EPSG:3857');
+
+	// an overlay to position at the bottom-center
+        var overlay = new ol.Overlay({
+          element: document.getElementById('overlay'),
+          positioning: 'bottom-center'
+        });
+	
+	//대전, 서울, 북한, 일본으로 가기 
+	var daejeon = ol.proj.transform([ 127.37510, 36.42085], 'EPSG:4326', 'EPSG:3857');
+        var seoul = ol.proj.transform([ 126.97806, 37.56667], 'EPSG:4326', 'EPSG:3857');
+	var jeju = ol.proj.transform([ 126.684723, 33.321349], 'EPSG:4326', 'EPSG:3857');
+	var northkorea = ol.proj.transform([ 125.75, 39.032], 'EPSG:4326', 'EPSG:3857');
+	var japan = ol.proj.transform([139.839478,35.652832], 'EPSG:4326', 'EPSG:3857');
+
+	// view, starting at the center
+        var view = new ol.View({
+          center: center,
+          zoom: 8
+        });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+       // display GPX DATA
+       // create a style to display our position history (track)
+       var trackStyle = new ol.style.Style({
+         stroke: new ol.style.Stroke({
+           color: 'rgba(0,0,255,1.0)',
+           width: 3,
+           lineCap: 'round'
+         }),
+	 radius: 6
+       });
+       // use a single feature with a linestring geometry to display our track
+       var trackFeature = new ol.Feature({
+         geometry: new ol.geom.LineString([])
+       });
+       // we'll need a vector layer to render it
+       var trackLayer = new ol.layer.Vector({
+         source: new ol.source.Vector({
+           features: [trackFeature]
+         }),
+         style: trackStyle
+       });
+	//////////////////////////////////////////////////////	
+	// finally, the map 
+        var map = new ol.Map({
+          target: 'map',
+          layers: [layer, satellite, trackLayer],
+          view: view
+        });
+
+ 	///////////////////////////////////////////////////////////////
+	// set up the geolocation api to track our position
+       var geolocation = new ol.Geolocation({
+         tracking: true
+       });
+       // bind the view's projection
+       geolocation.bindTo('projection', view);
+       // when we get a position update, add the coordinate to the track's
+       // geometry and recenter the view
+       geolocation.on('change:position', function() {
+        var coordinate2 = geolocation.getPosition();
+         view.setCenter(coordinate2);
+         trackFeature.getGeometry().appendCoordinate(coordinate2);
+       });
+      // put a marker at our current position
+      var marker = new ol.Overlay({
+        element: document.getElementById('location'),
+        positioning: 'center-center'
+      });
+      map.addOverlay(marker);
+      marker.bindTo('position', geolocation);
+      // rotate the view to match the device orientation
+      var deviceOrientation = new ol.DeviceOrientation({
+        tracking: true
+      });
+      deviceOrientation.on('change:heading', onChangeHeading);
+      function onChangeHeading(event) {
+        var heading = event.target.getHeading();
+        view.setRotation(-heading);
+      }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+	// create a DOM Input helper for the checkbox 위성지도 안보이게 체크박스
+        var visible = new ol.dom.Input(document.getElementById('visible'));
+        // and bind its 'checked' property to the layer's 'visible' property
+        visible.bindTo('checked', satellite, 'visible');	
+
+
+	function doBounce(location) {
+	  // bounce by zooming out one level and back in
+	  var bounce = ol.animation.bounce({
+	    resolution: map.getView().getResolution() * 2
+	  });
+	  // start the pan at the current center of the map
+	  var pan = ol.animation.pan({
+	    source: map.getView().getCenter()
+	  });
+	  map.beforeRender(bounce);
+	  map.beforeRender(pan);
+	  // when we set the center to the new location, the animated move will
+	  // trigger the bounce and pan effects
+	  map.getView().setCenter(location);
+        }
+        function doPan(location) {
+          // pan from the current center
+          var pan = ol.animation.pan({
+            source: map.getView().getCenter()
+          });
+          map.beforeRender(pan);
+          // when we set the new location, the map will pan smoothly to it
+          map.getView().setCenter(location);
+        }
+
+        // register an event handler for the click event
+        map.on('click', function(event) {
+          // extract the spatial coordinate of the click event in map projection units
+          var coord = event.coordinate;
+          // transform it to decimal degrees
+          var degrees = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
+          // format a human readable version
+          var hdms = ol.coordinate.toStringHDMS(degrees);
+          // update the overlay element's content
+          var element = overlay.getElement();
+          element.innerHTML = hdms;
+          // position the element (using the coordinate in the map's projection)
+          overlay.setPosition(coord);
+          // and add it to the map
+          map.addOverlay(overlay);
+        });
+    </script>
+   </grid>
+  </body>
+</html>
+
